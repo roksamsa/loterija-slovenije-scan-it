@@ -37,7 +37,7 @@ async function fileToImage(dataUrl: string): Promise<HTMLImageElement> {
  */
 export function CameraPage() {
     const navigate = useNavigate();
-    const { videoRef, start, stop, refocus, error: camError, ready } = useCameraStream();
+    const { videoRef, start, stop, refocus, cycleRearCamera, error: camError, ready } = useCameraStream();
     const [facing, setFacing] = useState<"user" | "environment">("environment");
     const [cap, setCap] = useState<CaptureState>("idle");
     const [captured, setCaptured] = useState<HTMLCanvasElement | null>(null);
@@ -81,8 +81,18 @@ export function CameraPage() {
     }, [facing, start, stop]);
 
     const onFlip = useCallback(() => {
-        setFacing((f) => (f === "environment" ? "user" : "environment"));
-    }, []);
+        if (facing === "environment") {
+            void (async () => {
+                const switchedRearLens = await cycleRearCamera();
+                if (!switchedRearLens) {
+                    setFacing("user");
+                }
+            })();
+            return;
+        }
+
+        setFacing("environment");
+    }, [cycleRearCamera, facing]);
 
     const onCameraTap = useCallback(
         (e: React.PointerEvent<HTMLVideoElement>) => {
@@ -427,8 +437,8 @@ export function CameraPage() {
                     className="cam-aux-btn cam-aux-btn--round"
                     onClick={onFlip}
                     disabled={!ready}
-                    aria-label="Zamenjaj kamero"
-                    title="Zamenjaj kamero"
+                    aria-label="Zamenjaj zadnjo kamero"
+                    title="Zamenjaj zadnjo kamero"
                 >
                     <span className="cam-aux-btn__ic" aria-hidden>
                         <MdCached size={24} />
