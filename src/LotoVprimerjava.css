@@ -1,0 +1,186 @@
+.lvm-official {
+  margin: 0 0 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: #14221e;
+  border: 1px solid #2a5a45;
+}
+
+.lvm-official-h {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+}
+
+.lvm-official-ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.lvm-official-ul li {
+  margin: 0.2rem 0;
+}
+
+.lvm-lead {
+  margin: 0.4rem 0 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.lvm-ocr {
+  max-height: 200px;
+  overflow: auto;
+  font-size: 0.72rem;
+  white-space: pre-wrap;
+  background: #0a100e;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem;
+  color: #8fa39c;
+}
+
+.lvm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.lvm-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.35rem;
+  padding: 0.65rem 0.7rem;
+  background: #111816;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+@media (min-width: 31.25rem) {
+  .lvm-row {
+    grid-template-columns: 5rem 1fr minmax(0, 1.2fr);
+    align-items: start;
+  }
+
+  .lvm-t,
+  .lvm-idx {
+    align-self: center;
+  }
+}
+
+@media (min-width: 48rem) {
+  .lvm-row {
+    padding: 0.85rem 1rem;
+    gap: 0.5rem 0.6rem;
+    border-radius: 10px;
+  }
+}
+
+.lvm-idx {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.lvm-nums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.lvm-b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.65rem;
+  height: 1.7rem;
+  padding: 0 0.25rem;
+  border-radius: 6px;
+  background: #1a2824;
+  border: 1px solid #2a4a3e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 24rem) {
+  .lvm-b {
+    min-width: 1.8rem;
+    height: 1.8rem;
+    font-size: 0.85rem;
+    padding: 0 0.3rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .lvm-b {
+    min-width: 1.95rem;
+    height: 1.95rem;
+    font-size: 0.9rem;
+  }
+}
+
+.lvm-t {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.lvm-win {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.lvm-eur {
+  color: #e8c96a;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.lvm-lose {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.lvm-by-draw {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0.4rem 0 0;
+  border-top: 1px solid #24332e;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.lvm-by-draw li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  padding: 0.2rem 0;
+}
+
+.lvm-dt {
+  color: #8a9a94;
+  min-width: 0;
+  flex: 0 0 6.5rem;
+}
+
+@media (min-width: 31.25rem) {
+  .lvm-dt {
+    min-width: 7.5rem;
+    flex: none;
+  }
+}
+
+h2.lvm-title.subtitle {
+  font-size: clamp(1.02rem, 0.94rem + 0.35vw, 1.2rem);
+  line-height: 1.3;
+}

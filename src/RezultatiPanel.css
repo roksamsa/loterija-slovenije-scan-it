@@ -1,0 +1,106 @@
+.rez-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .rez-grid {
+    gap: 1.15rem;
+  }
+
+  .rez-game {
+    padding: 1rem 1.1rem;
+  }
+}
+
+.rez-game {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  background: #111816;
+}
+
+.rez-game-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.rez-meta {
+  margin: 0 0 0.6rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.rez-next {
+  font-weight: normal;
+}
+
+.rez-subs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rez-subs li {
+  margin-bottom: 0.75rem;
+}
+
+.rez-subs li:last-child {
+  margin-bottom: 0;
+}
+
+.rez-sub-h {
+  margin-bottom: 0.35rem;
+}
+
+.rez-sub-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.rez-sub-nums {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rez-balls {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rez-ball {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: linear-gradient(145deg, #1e3d32, #0d2620);
+  border: 1px solid #2a5c4a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.rez-balls--add .rez-ball {
+  background: linear-gradient(145deg, #3d2e1e, #261a0d);
+  border-color: #6b5a3a;
+}
+
+.rez-plus {
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0 0.15rem;
+}
+
+.rez-err {
+  color: var(--danger);
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+}

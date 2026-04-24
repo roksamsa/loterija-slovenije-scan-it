@@ -1,0 +1,113 @@
+.arch-block {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.arch-block:first-of-type {
+  margin-top: 0.35rem;
+  padding-top: 0;
+  border-top: none;
+}
+
+.arch-block-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arch-src {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.arch-src:hover {
+  text-decoration: underline;
+}
+
+.arch-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.arch-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.arch-row:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 40rem) {
+  .arch-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    padding: 0.55rem 0;
+  }
+
+  .arch-date {
+    flex: 0 0 auto;
+  }
+
+  .arch-nums {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+}
+
+.arch-date {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.arch-nums {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 0.35rem;
+}
+
+.arch-balls {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.arch-balls--add .arch-ball {
+  border-style: dashed;
+  opacity: 0.95;
+}
+
+.arch-ball {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.3rem;
+  border-radius: 50%;
+  background: #1a2a25;
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.arch-plus {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+}

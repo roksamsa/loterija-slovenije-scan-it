@@ -1,0 +1,68 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0f1412;
+  --surface: #1a2220;
+  --border: #2a3532;
+  --text: #e8f0ed;
+  --muted: #8fa39c;
+  --accent: #2ecc8f;
+  --accent-dim: #1a7a5a;
+  --danger: #e85d5d;
+  /* Responsive layout: fluid gutters + cap content width (used by .app, listek) */
+  --page-pad: clamp(0.75rem, 2.5vw, 2rem);
+  --content-max: min(32rem, 100% - 2 * var(--page-pad));
+  --content-max-md: min(40rem, 100% - 2 * var(--page-pad));
+  --content-max-lg: min(50rem, 100% - 2 * var(--page-pad));
+  font-family: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: radial-gradient(1200px 600px at 10% 0%, #163530 0%, transparent 55%),
+    radial-gradient(800px 400px at 90% 20%, #1a3d35 0%, transparent 50%), var(--bg);
+}
+
+/* Wider viewports: softer, wider background wash */
+@media (min-width: 64rem) {
+  body {
+    background: radial-gradient(1800px 800px at 8% 0%, #1a3d36 0%, transparent 50%),
+      radial-gradient(1200px 500px at 85% 15%, #163028 0%, transparent 48%),
+      radial-gradient(ellipse 100% 80% at 50% 100%, #0a1210, var(--bg));
+  }
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.9em;
+}

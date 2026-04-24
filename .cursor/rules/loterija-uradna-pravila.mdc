@@ -1,0 +1,21 @@
+---
+description: Uradna pravila iger in viri za Loto, Eurojackpot, Viking, Joker itd.
+alwaysApply: true
+---
+
+# Pravila iger (Loterija Slovenije)
+
+## Vir resnice (ne vnašaj iz glave)
+
+- **Kazalo vseh iger in PDF-ov (prečiščena besedila, dodatki)**: [Pravila iger na srečo](https://www.loterija.si/pravila-iger-na-sreco).
+- V repozitoriju je kazalo povezav: `src/loterijaPravilaIndex.ts` (posodobi, če se na strani zamenjajo URL-ji ali dati PDF).
+
+## Pri implementaciji
+
+- **Dobitni razredi, števila, meje in izplačila** za Loto, Joker, Loto plus itd. morajo ustrezati **uradni publikaciji** (Pravila + tabela dobitkov na [loto/rezultati](https://www.loterija.si/loto/rezultati) ali pripadajočim PDF), ne osebnim domnevam.
+- Ne skrajšavaj in ne parafrziravaj pravilnikov kot trditev o pravu; navedi povezavo na PDF.
+- Aplikacija je **pomoč / informativno**; končno stanje listka: **Preveri potrdilo** in uradne strani Loterije.
+
+## Pri spremembi povezav
+
+- Znova obišči [pravila-iger-na-sreco](https://www.loterija.si/pravila-iger-na-sreco) in uskladi `loterijaPravilaIndex.ts` z dejanskimi povezavami na strani (datumi v imenu datoteke se menjajo).

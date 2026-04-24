@@ -1,0 +1,97 @@
+.slip-view-err {
+  color: var(--danger);
+  margin: 0.4rem 0 0;
+}
+
+.slip-kv {
+  display: grid;
+  grid-template-columns: minmax(0, 7.5rem) 1fr;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+.slip-kv dt {
+  color: var(--muted);
+  margin: 0;
+}
+
+.slip-kv dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.slip-h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.4rem;
+  color: var(--accent);
+}
+
+.slip-field-list,
+.slip-win-list,
+.slip-rounds {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.slip-field-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.slip-field-row:last-child {
+  border-bottom: none;
+}
+
+.slip-fi {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.slip-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.slip-won {
+  color: #e8c96a;
+}
+
+.slip-round-item {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #24332e;
+  font-size: 0.85rem;
+}
+
+.slip-round-item:last-child {
+  border-bottom: none;
+}
+
+.slip-ri {
+  font-weight: 600;
+}
+
+.slip-when {
+  color: var(--muted);
+}
+
+.slip-pre {
+  font-size: 0.7rem;
+  line-height: 1.35;
+  max-height: 220px;
+  overflow: auto;
+  padding: 0.5rem 0.65rem;
+  background: #0a100e;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0.5rem 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #9fb0a8;
+}

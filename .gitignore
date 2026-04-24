@@ -14,8 +14,10 @@
 
 # production
 /build
+/dist
 
 # misc
+.venv
 .DS_Store
 *.pem
 
