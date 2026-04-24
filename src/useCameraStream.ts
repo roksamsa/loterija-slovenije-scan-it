@@ -1,10 +1,59 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+type FocusPoint = { x: number; y: number }
+
+type FocusCapabilities = MediaTrackCapabilities & {
+  focusMode?: string[]
+}
+
+type FocusConstraintSet = MediaTrackConstraintSet & {
+  focusMode?: string
+  pointsOfInterest?: FocusPoint[]
+}
+
+async function applyFocusConstraints(
+  track: MediaStreamTrack,
+  modes: string[],
+  point?: FocusPoint,
+): Promise<boolean> {
+  if (typeof track.getCapabilities !== 'function') return false
+
+  const capabilities = track.getCapabilities() as FocusCapabilities
+  const focusMode = modes.find((mode) => capabilities.focusMode?.includes(mode))
+  const focusConstraints: FocusConstraintSet = {}
+
+  if (focusMode) {
+    focusConstraints.focusMode = focusMode
+  }
+  if (point) {
+    focusConstraints.pointsOfInterest = [point]
+  }
+  if (!focusConstraints.focusMode && !focusConstraints.pointsOfInterest) {
+    return false
+  }
+
+  try {
+    await track.applyConstraints({
+      advanced: [focusConstraints],
+    } as MediaTrackConstraints)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export function useCameraStream() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [ready, setReady] = useState(false)
+
+  const refocus = useCallback(async (point?: FocusPoint) => {
+    const track = streamRef.current?.getVideoTracks()[0]
+    if (!track) return false
+
+    return applyFocusConstraints(track, ['single-shot', 'continuous', 'manual'], point)
+  }, [])
 
   const start = useCallback(async (facing: 'user' | 'environment' = 'environment') => {
     setError(null)
@@ -23,6 +72,10 @@ export function useCameraStream() {
         audio: false,
       })
       streamRef.current = s
+      const track = s.getVideoTracks()[0]
+      if (track && facing === 'environment') {
+        void applyFocusConstraints(track, ['continuous', 'single-shot'])
+      }
       const v = videoRef.current
       if (v) {
         v.srcObject = s
@@ -47,5 +100,5 @@ export function useCameraStream() {
     return () => stop()
   }, [stop])
 
-  return { videoRef, start, stop, error, ready }
+  return { videoRef, start, stop, refocus, error, ready }
 }

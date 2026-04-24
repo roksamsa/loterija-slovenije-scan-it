@@ -9,6 +9,10 @@ import "./App.css";
 
 type CaptureState = "idle" | "hold" | "ocr";
 
+function clamp01(value: number): number {
+    return Math.min(1, Math.max(0, value));
+}
+
 function captureVideoFrame(video: HTMLVideoElement): HTMLCanvasElement {
     const c = document.createElement("canvas");
     c.width = video.videoWidth;
@@ -33,7 +37,7 @@ async function fileToImage(dataUrl: string): Promise<HTMLImageElement> {
  */
 export function CameraPage() {
     const navigate = useNavigate();
-    const { videoRef, start, stop, error: camError, ready } = useCameraStream();
+    const { videoRef, start, stop, refocus, error: camError, ready } = useCameraStream();
     const [facing, setFacing] = useState<"user" | "environment">("environment");
     const [cap, setCap] = useState<CaptureState>("idle");
     const [captured, setCaptured] = useState<HTMLCanvasElement | null>(null);
@@ -79,6 +83,19 @@ export function CameraPage() {
     const onFlip = useCallback(() => {
         setFacing((f) => (f === "environment" ? "user" : "environment"));
     }, []);
+
+    const onCameraTap = useCallback(
+        (e: React.PointerEvent<HTMLVideoElement>) => {
+            if (!ready || facing !== "environment") return;
+
+            const rect = e.currentTarget.getBoundingClientRect();
+            void refocus({
+                x: clamp01((e.clientX - rect.left) / rect.width),
+                y: clamp01((e.clientY - rect.top) / rect.height),
+            });
+        },
+        [facing, ready, refocus],
+    );
 
     const best = useMemo(
         () => (ocrText ? bestConfirmationId(ocrText) : null),
@@ -357,11 +374,12 @@ export function CameraPage() {
                 playsInline
                 muted
                 autoPlay
+                onPointerUp={onCameraTap}
                 className={facing === "user" ? "cam-video cam-video--mirror" : "cam-video"}
             />
 
             <div className="cam-hint" id="main-cam">
-                Držite listek raven in dobro osvetljen.
+                Dotaknite se slike za ostrenje. Držite listek raven in dobro osvetljen.
             </div>
 
             <div
