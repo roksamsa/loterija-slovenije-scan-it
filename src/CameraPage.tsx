@@ -89,12 +89,18 @@ export function CameraPage() {
             if (!ready || facing !== "environment") return;
 
             const rect = e.currentTarget.getBoundingClientRect();
-            void refocus({
+            const point = {
                 x: clamp01((e.clientX - rect.left) / rect.width),
                 y: clamp01((e.clientY - rect.top) / rect.height),
-            });
+            };
+            void (async () => {
+                const focused = await refocus(point);
+                if (!focused) {
+                    await start(facing);
+                }
+            })();
         },
-        [facing, ready, refocus],
+        [facing, ready, refocus, start],
     );
 
     const best = useMemo(

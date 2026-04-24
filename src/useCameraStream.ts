@@ -11,35 +11,72 @@ type FocusConstraintSet = MediaTrackConstraintSet & {
   pointsOfInterest?: FocusPoint[]
 }
 
+type ImageCaptureLike = {
+  setOptions?: (settings: FocusConstraintSet) => Promise<void>
+}
+
+type WindowWithImageCapture = Window &
+  typeof globalThis & {
+    ImageCapture?: new (track: MediaStreamTrack) => ImageCaptureLike
+  }
+
+function getSupportedFocusModes(track: MediaStreamTrack, modes: string[]): string[] {
+  if (typeof track.getCapabilities !== 'function') return modes
+
+  const capabilities = track.getCapabilities() as FocusCapabilities
+  if (!capabilities.focusMode?.length) return modes
+
+  return modes.filter((mode) => capabilities.focusMode?.includes(mode))
+}
+
+async function applyImageCaptureFocus(
+  track: MediaStreamTrack,
+  modes: string[],
+  point?: FocusPoint,
+): Promise<boolean> {
+  const ImageCaptureCtor = (window as WindowWithImageCapture).ImageCapture
+  if (!ImageCaptureCtor) return false
+
+  const capture = new ImageCaptureCtor(track)
+  if (!capture.setOptions) return false
+
+  for (const focusMode of getSupportedFocusModes(track, modes)) {
+    try {
+      await capture.setOptions({
+        focusMode,
+        ...(point ? { pointsOfInterest: [point] } : {}),
+      })
+      return true
+    } catch {
+      // Try the next mode/fallback. Android devices differ per camera module.
+    }
+  }
+
+  return false
+}
+
 async function applyFocusConstraints(
   track: MediaStreamTrack,
   modes: string[],
   point?: FocusPoint,
 ): Promise<boolean> {
-  if (typeof track.getCapabilities !== 'function') return false
+  for (const focusMode of getSupportedFocusModes(track, modes)) {
+    const focusConstraints: FocusConstraintSet = {
+      focusMode,
+      ...(point ? { pointsOfInterest: [point] } : {}),
+    }
 
-  const capabilities = track.getCapabilities() as FocusCapabilities
-  const focusMode = modes.find((mode) => capabilities.focusMode?.includes(mode))
-  const focusConstraints: FocusConstraintSet = {}
-
-  if (focusMode) {
-    focusConstraints.focusMode = focusMode
-  }
-  if (point) {
-    focusConstraints.pointsOfInterest = [point]
-  }
-  if (!focusConstraints.focusMode && !focusConstraints.pointsOfInterest) {
-    return false
+    try {
+      await track.applyConstraints({
+        advanced: [focusConstraints],
+      } as MediaTrackConstraints)
+      return true
+    } catch {
+      // Continue with the next focus mode before giving up.
+    }
   }
 
-  try {
-    await track.applyConstraints({
-      advanced: [focusConstraints],
-    } as MediaTrackConstraints)
-    return true
-  } catch {
-    return false
-  }
+  return false
 }
 
 export function useCameraStream() {
@@ -52,7 +89,18 @@ export function useCameraStream() {
     const track = streamRef.current?.getVideoTracks()[0]
     if (!track) return false
 
-    return applyFocusConstraints(track, ['single-shot', 'continuous', 'manual'], point)
+    const modes = ['single-shot', 'continuous', 'manual']
+    const focused =
+      (await applyImageCaptureFocus(track, modes, point)) ||
+      (await applyFocusConstraints(track, modes, point))
+
+    if (focused) {
+      window.setTimeout(() => {
+        void applyFocusConstraints(track, ['continuous'])
+      }, 900)
+    }
+
+    return focused
   }, [])
 
   const start = useCallback(async (facing: 'user' | 'environment' = 'environment') => {

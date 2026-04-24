@@ -66,6 +66,7 @@
     z-index: 0;
     max-height: none;
     border-radius: 0;
+    touch-action: manipulation;
 }
 
 .cam-video--mirror {
