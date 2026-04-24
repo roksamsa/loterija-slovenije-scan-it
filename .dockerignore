@@ -1,0 +1,16 @@
+.git
+.cursor
+.venv
+node_modules
+dist
+build
+coverage
+__pycache__
+*.pyc
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env*.local
+.DS_Store

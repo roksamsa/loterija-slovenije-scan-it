@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import re
+from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from loterija import (
     EJP_REZULTATI_URL,
@@ -16,6 +20,7 @@ from loterija import (
 )
 
 app = FastAPI(title="Loterija rezultati (proxy)", version="0.1.0")
+STATIC_DIR = Path(os.environ.get("STATIC_DIR", Path(__file__).resolve().parent / "static"))
 
 app.add_middleware(
     CORSMiddleware,
@@ -100,3 +105,17 @@ async def api_rezultati() -> dict:
         return build_full_payload(r_idx.text, loto_html, ejp_html, vik_html)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Napaka pri parsiranju: {e!s}") from e
+
+
+if STATIC_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
+
+
+@app.get("/{full_path:path}", include_in_schema=False)
+async def serve_spa(full_path: str) -> FileResponse:
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not found")
+    index_file = STATIC_DIR / "index.html"
+    if not index_file.exists():
+        raise HTTPException(status_code=404, detail="Frontend build not found")
+    return FileResponse(index_file)

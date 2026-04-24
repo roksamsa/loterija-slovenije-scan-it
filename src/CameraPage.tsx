@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MdCached, MdDialpad, MdFileUpload, MdFlipCameraIos, MdFormatListBulleted, MdListAlt } from "react-icons/md";
+import { MdCached, MdDialpad, MdFileUpload, MdFormatListBulleted } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { bestConfirmationId, findConfirmationIds } from "./parseTicket";
 import { runOcr, type OcrProgress } from "./ocr";
