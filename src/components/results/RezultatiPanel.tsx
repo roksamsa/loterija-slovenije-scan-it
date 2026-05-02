@@ -1,4 +1,4 @@
-import type { GameBlock, RezultatiResponse } from './rezultatiTypes'
+import type { GameBlock, RezultatiResponse } from '../../lib/rezultatiTypes'
 import './RezultatiPanel.css'
 
 const TITLES: Record<string, string> = {

@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MdCached, MdDialpad, MdFileUpload, MdFormatListBulleted } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { bestConfirmationId, findConfirmationIds } from "./parseTicket";
-import { runOcr, type OcrProgress } from "./ocr";
-import { useCameraStream } from "./useCameraStream";
-import { PotrdiloVnosModal } from "./PotrdiloVnosModal";
-import "./App.css";
+import { bestConfirmationId, findConfirmationIds } from "../lib/parseTicket";
+import { runOcr, type OcrProgress } from "../lib/ocr";
+import { useCameraStream } from "../hooks/useCameraStream";
+import { PotrdiloVnosModal } from "../components/common/PotrdiloVnosModal";
 
 type CaptureState = "idle" | "hold" | "ocr";
 

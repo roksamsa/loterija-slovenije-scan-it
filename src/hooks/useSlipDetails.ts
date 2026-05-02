@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { extractSlipLotoContext, poljaFromSlipJson, type SlipWinningInfo } from './parseSlipResponse'
-import type { ParsedPolje } from './parseLotoFields'
-import type { SlipRoundInfo } from './slipDate'
+import { extractSlipLotoContext, poljaFromSlipJson, type SlipWinningInfo } from '../lib/parseSlipResponse'
+import type { ParsedPolje } from '../lib/parseLotoFields'
+import type { SlipRoundInfo } from '../lib/slipDate'
 
 export type SlipHookState = {
   loading: boolean

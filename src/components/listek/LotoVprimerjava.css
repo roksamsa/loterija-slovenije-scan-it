@@ -54,25 +54,13 @@
 }
 
 .lvm-row {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.35rem;
   padding: 0.65rem 0.7rem;
   background: #111816;
   border: 1px solid var(--border);
   border-radius: 8px;
-}
-
-@media (min-width: 31.25rem) {
-  .lvm-row {
-    grid-template-columns: 5rem 1fr minmax(0, 1.2fr);
-    align-items: start;
-  }
-
-  .lvm-t,
-  .lvm-idx {
-    align-self: center;
-  }
 }
 
 @media (min-width: 48rem) {
@@ -87,6 +75,13 @@
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--accent);
+}
+
+.lvm-idx__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-grow: 1;
 }
 
 .lvm-nums {

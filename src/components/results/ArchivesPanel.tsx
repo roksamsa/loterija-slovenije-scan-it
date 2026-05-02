@@ -1,4 +1,4 @@
-import type { ArchiveDraw, RezultatiResponse } from './rezultatiTypes'
+import type { ArchiveDraw, RezultatiResponse } from '../../lib/rezultatiTypes'
 import './ArchivesPanel.css'
 
 const TITLES: Record<string, string> = {

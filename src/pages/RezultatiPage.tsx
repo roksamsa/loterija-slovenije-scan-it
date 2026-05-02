@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArchivesPanel } from "./ArchivesPanel";
-import { RezultatiPanel } from "./RezultatiPanel";
-import { useRezultati } from "./useRezultati";
-import "./App.css";
+import { ArchivesPanel } from "../components/results/ArchivesPanel";
+import { RezultatiPanel } from "../components/results/RezultatiPanel";
+import { useRezultati } from "../hooks/useRezultati";
 
 /**
  * Javni rezultati in arhiv (prej: pogled "Rezultati" v enem vmesniku).

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import type { RezultatiResponse } from './rezultatiTypes'
+import type { RezultatiResponse } from '../lib/rezultatiTypes'
 
 export function useRezultati() {
   const [data, setData] = useState<RezultatiResponse | null>(null)

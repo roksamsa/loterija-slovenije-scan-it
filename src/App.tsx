@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { CameraPage } from "./CameraPage";
-import { ListekPregledPage } from "./ListekPregledPage";
-import { RezultatiPage } from "./RezultatiPage";
-import "./App.css";
+import { CameraPage } from "./pages/CameraPage";
+import { ListekPregledPage } from "./pages/ListekPregledPage";
+import { RezultatiPage } from "./pages/RezultatiPage";
+import "./styles/App.css";
 
 export default function App() {
   return (
