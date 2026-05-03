@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@gutenye/ocr-browser": "^1.4.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-ga4": "^3.0.1",
