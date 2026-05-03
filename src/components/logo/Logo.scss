@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800&display=swap");
+
+.logo {
+  display: flex;
+  align-items: center;
+
+  &--overlay {
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.5rem;
+    color: inherit;
+    font-family: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--accent, #2ecc8f);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+  }
+
+  &__mark {
+    display: inline-grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    margin-left: -2.9rem;
+    border-radius: 999px;
+    font-weight: 900;
+    color: var(--accent, #2ecc8f);
+  }
+
+  &__icon-flower {
+    position: absolute;
+    display: inline-grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    color: #fff;
+    transform-origin: center;
+    animation: logo-flower-scan-pop 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 0 rgba(46, 204, 143, 0));
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+  }
+
+  &__text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    font-size: clamp(1.25rem, 1rem + 0.75vw, 1.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.055em;
+  }
+
+  &__text-main {
+    color: var(--text, #e8f0ed);
+  }
+
+  &__text-accent {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    text-transform: uppercase;
+    color: var(--accent, #2ecc8f);
+    letter-spacing: -0.035em;
+    background: linear-gradient(135deg, #7dffbd 0%, var(--accent, #2ecc8f) 48%, #1c8f42 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    span {
+      display: inline-block;
+      background: inherit;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+
+      &:nth-child(odd) {
+        transform: translateY(-0.1em);
+      }
+
+      &:nth-child(even) {
+        transform: translateY(0.1em);
+      }
+
+      &:nth-child(2) {
+        margin-left: 0.1em;
+      }
+    }
+  }
+
+  &__scanner-line {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 130%;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(46, 204, 143, 0.15) 12%,
+      #ffffff 50%,
+      rgba(46, 204, 143, 0.15) 88%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 10px rgba(46, 204, 143, 0.95),
+      0 0 24px rgba(46, 204, 143, 0.65),
+      0 0 42px rgba(46, 204, 143, 0.35);
+    transform: translate(-50%, -50%);
+    animation: logo-scanner-line 2.4s ease-in-out infinite;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 88%;
+      height: 18px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    &::before {
+      bottom: 100%;
+      background: linear-gradient(180deg, transparent, rgba(46, 204, 143, 0.18));
+    }
+
+    &::after {
+      top: 100%;
+      background: linear-gradient(180deg, rgba(46, 204, 143, 0.18), transparent);
+    }
+  }
+}
+
+@keyframes logo-flower-scan-pop {
+  0%,
+  18%,
+  33%,
+  68%,
+  83%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(46, 204, 143, 0));
+  }
+
+  25%,
+  75% {
+    transform: scale(1.18) rotate(-4deg);
+    filter:
+      drop-shadow(0 0 8px rgba(255, 255, 255, 0.75))
+      drop-shadow(0 0 16px rgba(46, 204, 143, 0.85));
+  }
+}
+
+@keyframes logo-scanner-line {
+  0%,
+  100% {
+    opacity: 0.38;
+    transform: translate(-50%, -1.45rem) scaleX(0.615);
+  }
+
+  12%,
+  88% {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 1;
+    transform: translate(-50%, 0) scaleX(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, 1.45rem) scaleX(0.615);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo__scanner-line,
+  .logo__icon-flower {
+    animation: none;
+  }
+
+  .logo__scanner-line {
+    opacity: 0.75;
+  }
+}
