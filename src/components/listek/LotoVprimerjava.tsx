@@ -4,7 +4,7 @@ import { parseLotoFieldsFromOcr } from '../../lib/parseLotoFields'
 import type { SlipWinningInfo } from '../../lib/parseSlipResponse'
 import type { ArchiveDraw, RezultatiResponse } from '../../lib/rezultatiTypes'
 import type { ParsedPolje } from '../../lib/parseLotoFields'
-import { matchArchiveToSlipRounds, type SlipRoundInfo } from '../../lib/slipDate'
+import { matchArchiveToSlipRounds, toDateKey, type SlipRoundInfo } from '../../lib/slipDate'
 import './LotoVprimerjava.css'
 
 type Props = {
@@ -27,6 +27,33 @@ function getLotoSubgame(rez: RezultatiResponse | null) {
     const subs = rez?.games.loto?.subgames
     if (!subs) return null
     return subs.find((s) => s.name === 'Loto') ?? null
+}
+
+function formatRoundDate(value: string): string {
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return value
+
+    return new Intl.DateTimeFormat('sl-SI', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).format(date)
+}
+
+function roundStatus(round: SlipRoundInfo, checkedDateKeys: Set<string>): {
+    className: string
+    label: string
+} {
+    const key = toDateKey(round.drawOn)
+    if (round.drawHappened && key && checkedDateKeys.has(key)) {
+        return { className: 'lvm-rounds__badge--checked', label: 'Preverjeno' }
+    }
+    if (round.drawHappened) {
+        return { className: 'lvm-rounds__badge--done', label: 'Žrebanje zaključeno' }
+    }
+    return { className: 'lvm-rounds__badge--pending', label: 'Čaka žrebanje' }
 }
 
 /** Žrebanja Loto: arhiv (do 5) ali en zapis s tekoče strani. */
@@ -66,6 +93,14 @@ export function LotoVprimerjava({
         }
         return fullArch
     }, [fromApi, fullArch, slipRounds])
+    const checkedDateKeys = useMemo(() => {
+        const keys = new Set<string>()
+        for (const draw of draws) {
+            const key = toDateKey(draw.drawDate)
+            if (key) keys.add(key)
+        }
+        return keys
+    }, [draws])
     const rows = useMemo(() => {
         if (draws.length === 0 || polja.length === 0) {
             return null
@@ -108,6 +143,43 @@ export function LotoVprimerjava({
             id="loto-ujemanje"
             aria-label="Loto ujemanje z rezultati"
         >
+            {slipRounds && slipRounds.length > 0 ? (
+                <section className="lvm-rounds" aria-label="Krogi, za katere je listek vplačan">
+                    <div className="lvm-rounds__head">
+                        <h3 className="lvm-rounds__title">Krogi na listku</h3>
+                        <span className="lvm-rounds__count">{slipRounds.length}× vplačano</span>
+                    </div>
+                    <p className="lvm-rounds__note">
+                        Primerjava spodaj preveri samo kroge, kjer je žrebanje že opravljeno in so rezultati
+                        najdeni v arhivu.
+                    </p>
+                    <ul className="lvm-rounds__list">
+                        {slipRounds.map((round) => {
+                            const status = roundStatus(round, checkedDateKeys)
+                            return (
+                                <li key={`${round.year}-${round.round}-${round.drawOn}`} className="lvm-rounds__item">
+                                    <div>
+                                        <div className="lvm-rounds__round">
+                                            Krog {round.round}
+                                            {round.year ? ` (${round.year})` : ''}
+                                        </div>
+                                        <div className="lvm-rounds__date">{formatRoundDate(round.drawOn)}</div>
+                                    </div>
+                                    <div className="lvm-rounds__meta">
+                                        {round.statusWinning ? (
+                                            <span className="lvm-rounds__win">Dobitni krog</span>
+                                        ) : null}
+                                        <span className={`lvm-rounds__badge ${status.className}`}>
+                                            {status.label}
+                                        </span>
+                                    </div>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </section>
+            ) : null}
+
             {slipWinnings && slipWinnings.length > 0 && !hideSlipWinningsBanner ? (
                 <div className="lvm-official" role="status">
                     <h3 className="lvm-official-h">Uradno s potrdila (e.loterija)</h3>
