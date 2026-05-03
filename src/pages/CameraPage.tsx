@@ -212,6 +212,21 @@ export function CameraPage() {
   }, [facing, start]);
 
   if (captured) {
+    const isScanning =
+      (cap === "ocr" || ocrProgress < 1) &&
+      ocrText === null &&
+      !ocrError &&
+      cap !== "idle";
+
+    if (isScanning) {
+      return (
+        <div className="app scan-loading" role="status" aria-live="polite">
+          <Logo isLogoOnly />
+          <p className="scan-loading__text">Skeniramo vaš listek</p>
+        </div>
+      );
+    }
+
     return (
       <div className="app" id="review-panel">
         <a className="skip-link" href="#ocr-panel">
@@ -245,23 +260,6 @@ export function CameraPage() {
             alt="Zajeta potrdilo"
           />
         </div>
-
-        {(cap === "ocr" || ocrProgress < 1) &&
-          ocrText === null &&
-          !ocrError &&
-          cap !== "idle" && (
-            <div className="card">
-              <p className="subtitle" style={{ margin: 0 }}>
-                Branje besedila (lokalno)…
-              </p>
-              <div className="progress-outer">
-                <div
-                  className="progress-inner"
-                  style={{ width: `${Math.min(1, ocrProgress) * 100}%` }}
-                />
-              </div>
-            </div>
-          )}
 
         {ocrError && (
           <div className="card">

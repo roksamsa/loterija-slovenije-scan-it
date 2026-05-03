@@ -355,6 +355,41 @@ video.preview--mirror {
     display: block;
 }
 
+.scan-loading {
+    min-height: 100dvh;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.75rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.scan-loading .logo__wrapper {
+    width: clamp(6rem, 20vw, 10rem);
+    height: clamp(6rem, 20vw, 10rem);
+}
+
+.scan-loading .logo__icon-flower {
+    width: 32%;
+    height: 32%;
+}
+
+.scan-loading .logo__scanner-line {
+    height: clamp(0.35rem, 1vw, 0.55rem);
+}
+
+.scan-loading__text {
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(1.55rem, 1.1rem + 2vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;

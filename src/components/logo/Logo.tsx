@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import "./Logo.scss";
 
-export function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
+export function Logo({ isOverlay = false, isLogoOnly = false }: { isOverlay?: boolean, isLogoOnly?: boolean }) {
     return (
-        <div className={`logo ${isOverlay ? "logo--overlay" : ""}`}>
+        <div className={`logo ${isOverlay ? "logo--overlay" : ""} ${isLogoOnly ? "logo--logo-only" : ""}`}>
             <Link
                 to="/"
                 className="logo__link"
@@ -35,15 +35,18 @@ export function Logo({ isOverlay = false }: { isOverlay?: boolean }) {
                     </div>
                     <div className="logo__scanner-line"></div>
                 </div>
-                <span className="logo__text">
-                    <span className="logo__text-main">Preveri</span>
-                    <span className="logo__text-accent" aria-label="LOTO">
-                        <span aria-hidden="true">L</span>
-                        <span aria-hidden="true">O</span>
-                        <span aria-hidden="true">T</span>
-                        <span aria-hidden="true">O</span>
+                
+                {!isLogoOnly && (
+                    <span className="logo__text">
+                        <span className="logo__text-main">Preveri</span>
+                        <span className="logo__text-accent" aria-label="LOTO">
+                            <span aria-hidden="true">L</span>
+                            <span aria-hidden="true">O</span>
+                            <span aria-hidden="true">T</span>
+                            <span aria-hidden="true">O</span>
+                        </span>
                     </span>
-                </span>
+                )}
             </Link>
         </div>
     );
